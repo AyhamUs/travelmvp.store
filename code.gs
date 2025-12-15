@@ -104,7 +104,7 @@ function sendConfirmationEmail(orderData) {
       <div style="margin-bottom: 15px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #4285f4;">
         <strong>Bag #${bag.id} - $${bag.total.toFixed(2)}</strong><br>
         <ul style="margin: 10px 0; padding-left: 20px;">
-          <li>Base Travel Bag - $5.00</li>
+          <li>Base Travel Bag - $7.00</li>
     `;
     
     bag.addons.forEach(addon => {
@@ -188,7 +188,7 @@ function sendConfirmationEmail(orderData) {
     
     ORDER DETAILS:
     ${orderData.bags.map(bag => {
-      let bagText = `Bag #${bag.id} - $${bag.total.toFixed(2)}\n  - Base Travel Bag - $5.00`;
+      let bagText = `Bag #${bag.id} - $${bag.total.toFixed(2)}\n  - Base Travel Bag - $7.00`;
       bag.addons.forEach(addon => {
         bagText += `\n  - ${addon.name} - $${addon.price.toFixed(2)}`;
       });
@@ -233,7 +233,7 @@ function testEmail() {
           { name: 'Toothbrush/Toothpaste', price: 1.75 },
           { name: 'Degree Womens Deodorant', price: 2.00 }
         ],
-        total: 8.75
+        total: 10.75
       },
       {
         id: 2,
@@ -241,10 +241,10 @@ function testEmail() {
           { name: 'Hand Sanitizer', price: 3.50 },
           { name: 'Degree Mens Deodorant', price: 2.00 }
         ],
-        total: 10.50
+        total: 12.50
       }
     ],
-    total: 19.25,
+    total: 23.25,
     orderDate: new Date().toISOString()
   };
   
