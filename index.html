@@ -3,560 +3,2783 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel MVP - Custom Travel Bags</title>
+    <title>The Cure Collection - Supporting Blood Cancer Warriors</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="logo.png">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #8b0000;
+            --secondary-color: #8b0000;
+            --accent-color: #8b0000;
+            --text-dark: #000000;
+            --text-light: #000000;
+            --background: #fff;
+            --card-bg: #fff5f5;
+            --success: #8b0000;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Announcement Banner */
+        .announcement-banner {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .announcement-banner i {
+            margin-right: 0.5rem;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
+            z-index: 10000;
+            max-width: 300px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 41px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1300;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            z-index: 1300;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 121px;
+            background: #ffffff;
+            padding: 8rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            position: relative;
+            z-index: 1;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+        }
+
+
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), #a00000);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #a00000, #b82e2e);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139,0,0,0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Christmas Deals Section */
+        .christmas-deals {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #8b0000 0%, #a52a2a 50%, #dc143c 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .christmas-deals::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 40%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text fill="rgba(255,255,255,0.03)" font-size="20" y="50%">❄</text></svg>') repeat;
+            pointer-events: none;
+            animation: snowDrift 20s ease-in-out infinite;
+        }
+
+        @keyframes snowDrift {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .christmas-deals h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+
+        .christmas-deals > p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bundles-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bundle-card {
+            background: white;
+            padding: 0;
+            border-radius: 20px;
+            color: var(--text-dark);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bundle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(139,0,0,0.03) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .bundle-card:hover::before {
+            opacity: 1;
+        }
+
+        .bundle-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(139,0,0,0.3);
+        }
+
+        .bundle-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #ffebeb, #ffe5e5);
+        }
+
+        .bundle-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bundle-card:hover .bundle-image img {
+            transform: scale(1.1);
+        }
+
+        .bundle-content {
+            padding: 2rem;
+        }
+
+        .bundle-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .bundle-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .badge-popular {
+            background: linear-gradient(135deg, #8b0000, #c41e3a);
+            color: white;
+        }
+
+        .badge-new {
+            background: linear-gradient(135deg, #d4af37, #f4c430);
+            color: #2c2c2c;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .bundle-price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin: 1.25rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        /* Video Section */
+        .video-section {
+            padding: 4rem 2rem;
+            background: var(--card-bg);
+            text-align: center;
+        }
+
+        .video-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Featured Products */
+        .featured-products {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139,0,0,0.05), rgba(178,34,34,0.05));
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 15px 40px rgba(139,0,0,0.2);
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #ffebeb, #ffe5e5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary-color);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.08);
+        }
+
+        .product-info {
+            padding: 1.75rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
+        }
+
+        .survivor-name {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #2c3e50;
+            line-height: 1.3;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .add-to-cart-btn {
+            padding: 0.75rem 1.75rem;
+            background: linear-gradient(135deg, var(--primary-color), #a00000);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(139,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .add-to-cart-btn:hover::before {
+            left: 100%;
+        }
+
+        .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(139,0,0,0.4);
+        }
+
+        /* Donation Section */
+        .donation-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #8b0000 0%, #a00000 50%, #b22222 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donation-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .donation-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .donation-cards {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .donation-card {
+            background: rgba(255,255,255,0.98);
+            padding: 2.5rem;
+            border-radius: 20px;
+            color: var(--text-dark);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .donation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), #dc143c);
+        }
+
+        .donation-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+        }
+
+        .donation-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .donation-card p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        /* Shopping Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-modal.active {
+            display: flex;
+        }
+
+        .cart-content {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            border-radius: 20px;
+            padding: 2rem;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--card-bg);
+            padding-bottom: 1rem;
+        }
+
+        .close-cart {
+            font-size: 2rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--text-light);
+        }
+
+        .cart-items {
+            margin-bottom: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .cart-items::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .cart-items::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .cart-items::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .cart-item-image {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ffebeb, #ffe5e5);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+            color: #2c3e50;
+            line-height: 1.3;
+        }
+
+        .cart-item-options {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .qty-btn {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #2c3e50;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .qty-btn:active {
+            transform: scale(0.95);
+        }
+
+        .cart-item-quantity span {
+            min-width: 25px;
+            text-align: center;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            white-space: nowrap;
+            margin: 0 0.75rem;
+        }
+
+        .remove-item {
+            cursor: pointer;
+            color: #e74c3c;
+            border: none;
+            background: #fee;
+            font-size: 1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .remove-item:hover {
+            background: #e74c3c;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .cart-summary {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cart-summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .cart-summary-row.divider {
+            border-top: 1px solid #e0e0e0;
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.4rem;
+            font-weight: 700;
+            padding: 1rem 0;
+            margin-top: 0.5rem;
+            border-top: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .first-purchase-discount {
+            background: var(--accent-color);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkout-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .checkout-btn {
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .checkout-btn:active {
+            transform: translateY(0);
+        }
+
+        .venmo-btn {
+            background: linear-gradient(135deg, #3D95CE, #2c7eb8);
+            color: white;
+        }
+
+        .cash-btn {
+            background: linear-gradient(135deg, var(--success), #27ae60);
+            color: white;
+        }
+
+        .revtrak-btn {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            color: white;
+        }
+
+        .payment-note {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+
+        /* Survivors Section */
+        .survivors-section {
+            padding: 5rem 2rem;
+            background: #ffffff;
+            position: relative;
+        }
+
+        .survivors-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .survivor-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .survivor-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(139,0,0,0.05));
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .survivor-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(139,0,0,0.15);
+        }
+
+        .survivor-card:hover::after {
+            opacity: 1;
+        }
+
+        .survivor-photo {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .survivor-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .survivor-info {
+            padding: 1.75rem;
+        }
+
+        .survivor-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .survivor-tagline {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Product Detail Modal */
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .product-modal.active {
+            display: flex;
+        }
+
+        .product-modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .product-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .close-modal {
+            font-size: 2rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .product-customization {
+            margin: 2rem 0;
+        }
+
+        .customization-group {
+            margin-bottom: 2rem;
+        }
+
+        .customization-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .customization-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--card-bg);
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        /* Survivor Story Modal */
+        .survivor-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .survivor-modal.active {
+            display: flex;
+        }
+
+        .survivor-modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 700px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .survivor-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--card-bg);
+            padding-bottom: 1rem;
+        }
+
+        .survivor-modal-icon {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .survivor-modal-icon img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .survivor-modal h2 {
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .survivor-modal-tagline {
+            color: var(--text-light);
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .survivor-modal-story {
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .close-survivor-modal {
+            font-size: 2rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--text-light);
+            line-height: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 111px;
+                right: -100%;
+                width: 260px;
+                height: calc(100vh - 111px);
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+                transition: right 0.3s;
+                gap: 1.5rem;
+                align-items: flex-start;
+                z-index: 1200;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 0.5rem 0;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .bundles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .donation-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .survivors-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .cart-item {
+                flex-wrap: wrap;
+                padding: 1rem;
+                gap: 0.75rem;
+            }
+
+            .cart-item-image {
+                width: 60px;
+                height: 60px;
+            }
+
+            .cart-item-info {
+                flex: 1;
+                min-width: 150px;
+            }
+
+            .cart-item-name {
+                font-size: 0.95rem;
+            }
+
+            .cart-item-price {
+                font-size: 1rem;
+                order: 3;
+                flex-basis: 100%;
+                text-align: right;
+                margin: 0.5rem 0 0 0;
+            }
+
+            .remove-item {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+
+            .cart-summary {
+                padding: 1rem;
+            }
+
+            .cart-total {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Checkout modal form styling: target left column only */
+        #checkoutModal .product-modal-content .checkout-left input,
+        #checkoutModal .product-modal-content .checkout-left textarea,
+        #checkoutModal .product-modal-content .checkout-left select {
+            width: 100% !important;
+            padding: 0.75rem !important;
+            border-radius: 10px !important;
+            border: 1px solid #e6e6e6 !important;
+            font-size: 1rem !important;
+            box-shadow: none !important;
+            margin-bottom: 8px !important;
+        }
+
+        /* Address row layout: city + state */
+        #checkoutModal .product-modal-content .address-row { display:flex; gap:0.5rem; margin-bottom:8px; }
+        #checkoutModal .product-modal-content .address-row .city { flex:3; min-width:0; }
+        #checkoutModal .product-modal-content .address-row .state { width:120px; flex:0 0 120px; }
+
+        /* ZIP and country row */
+        #checkoutModal .product-modal-content .zip-row { display:flex; gap:0.5rem; margin-bottom:8px; }
+        #checkoutModal .product-modal-content .zip-row .zip { width:120px; flex:0 0 120px; }
+        #checkoutModal .product-modal-content .zip-row .country { flex:1; min-width:0; }
+
+        #checkoutModal .product-modal-content label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        #checkoutModal .checkout-btn { width: 100%; }
+
+        /* Make checkout modal stack vertically on small screens */
+        @media (max-width: 768px) {
+            #checkoutModal .product-modal-content > div { flex-direction: column !important; }
+            #checkoutModal .product-modal-content > div [style*="width:360px"] { width: 100% !important; }
+            #checkoutModal .product-modal-content { padding: 16px; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            /* Ensure header items are visible and not clipped */
+            nav { overflow: visible; }
+            .nav-right { gap: 1rem; }
+            .cart-icon { font-size: 1.4rem; }
+
+            .hero {
+                padding: 4rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .christmas-deals h2 {
+                font-size: 1.8rem;
+            }
+
+            .video-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* On small screens the announcement banner and nav can conflict when both are fixed.
+           Make them flow naturally (non-fixed) on small devices to avoid overlap and clipping. */
+        @media (max-width: 768px) {
+            .announcement-banner {
+                position: relative;
+                top: 0;
+                box-shadow: none;
+            }
+            nav {
+                position: relative;
+                top: 0;
+                box-shadow: none;
+            }
+            .hero { margin-top: 0; }
+            /* Ensure mobile nav overlay anchors to the top of the viewport when opened */
+            .nav-links { top: 0 !important; height: 100vh !important; }
+        }
+
+        /* Additional responsiveness: make grids and modals adapt smoothly */
+        @media (max-width: 768px) {
+            .products-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+            .product-card { border-radius: 12px; padding: 0; }
+            .product-image { height: 180px; }
+            .product-info { padding: 1rem; }
+            .bundle-card img { height: 120px; }
+            .bundles-grid { grid-template-columns: 1fr; }
+            .cart-content { width: 95%; max-width: 720px; }
+            .cart-modal .cart-content { max-height: 85vh; }
+            .product-modal-content { max-width: 95%; padding: 16px; }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+            .product-image { height: 140px; }
+            .product-info { padding: 0.75rem; }
+            .product-price { font-size: 1.1rem; }
+            .bundle-card img { height: 100px; }
+            .nav-container { padding: 0 0.75rem; }
+            nav { top: 54px; }
+            .cart-content { width: 96%; max-width: 680px; padding: 12px; }
+            .product-modal-content { padding: 12px; }
+            .cart-item { padding: 0.5rem; }
+            .cart-item-image { width: 60px; height: 60px; }
+            .checkout-left input, .checkout-left select, .checkout-left textarea { font-size: 0.95rem !important; }
+            .announcement-banner { font-size: 0.9rem; padding: 0.6rem 1rem; }
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm">
-        <div class="container mx-auto px-4 py-6">
-            <div class="flex items-center justify-center">
-                <img src="logo.png" alt="Travel MVP Logo" class="h-16 w-auto">
-            </div>
-        </div>
-    </header>
+<body>
+    <!-- Announcement Banner -->
+    <div class="announcement-banner">
+        <i class="fas fa-gift"></i> Get 10% OFF your first purchase when you donate to BCU when you email us proof!
+    </div>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-12">
-        <!-- Hero Section -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Build Your Perfect Travel Bag</h1>
-            <p class="text-xl text-gray-600">Start with our base bag and customize with essential travel items</p>
-        </div>
-
-        <div class="max-w-4xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Product Selection -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Customize Your Bag</h2>
-                    
-                    <!-- Base Bag -->
-                    <div class="mb-6 p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="font-semibold text-lg text-gray-900">Base Travel Bag</h3>
-                                <p class="text-sm text-gray-600">Included with every bag</p>
-                            </div>
-                            <span class="text-xl font-bold text-blue-600">$7.00</span>
-                        </div>
-                    </div>
-
-                    <!-- Add-ons -->
-                    <div class="space-y-3">
-                        <h3 class="font-semibold text-lg text-gray-900 mb-4">Add Essentials:</h3>
-
-                        <!-- Toothbrush + Toothpaste -->
-                        <label class="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition">
-                            <div class="flex items-start">
-                                <input type="checkbox" class="addon-checkbox mt-2 w-5 h-5 text-blue-600 rounded" data-price="1.75" data-name="Toothbrush/Toothpaste">
-                                <img src="toothbrush.png" alt="Toothbrush" class="ml-4 h-16 w-16 object-contain">
-                                <img src="toothpaste.png" alt="Toothpaste" class="ml-3 h-16 w-16 object-contain">
-                                <div class="ml-4">
-                                    <div class="text-gray-900 font-semibold">Toothbrush & Toothpaste</div>
-                                    <p class="text-sm text-gray-600 mt-1">Freshmint adult rubber-handle toothbrush with premium bristles (individually wrapped) and Colgate 0.85 oz travel toothpaste — anticavity, mint-flavor, ADA accepted, gluten-free.</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-gray-700">$1.75</span>
-                        </label>
-
-                        <!-- Deodorant - Women's -->
-                        <label class="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition">
-                            <div class="flex items-start">
-                                <input type="checkbox" class="addon-checkbox mt-2 w-5 h-5 text-blue-600 rounded" data-price="2.00" data-name="Degree Womens Deodorant">
-                                <img src="womens deodorant.png" alt="Women's Deodorant" class="ml-4 h-16 w-16 object-contain">
-                                <div class="ml-4">
-                                    <div class="text-gray-900 font-semibold">Degree Women's Deodorant (0.5 oz)</div>
-                                    <p class="text-sm text-gray-600 mt-1">24-hour dry protection in a convenient 0.5 oz travel stick — 'Shower Clean' scent with rose & jasmine. Invisible solid for women.</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-gray-700">$2.00</span>
-                        </label>
-
-                        <!-- Deodorant - Men's -->
-                        <label class="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition">
-                            <div class="flex items-start">
-                                <input type="checkbox" class="addon-checkbox mt-2 w-5 h-5 text-blue-600 rounded" data-price="2.00" data-name="Degree Mens Deodorant">
-                                <img src="mens deodorant.png" alt="Men's Deodorant" class="ml-4 h-16 w-16 object-contain">
-                                <div class="ml-4">
-                                    <div class="text-gray-900 font-semibold">Degree Men's Deodorant (0.5 oz)</div>
-                                    <p class="text-sm text-gray-600 mt-1">Travel-size 0.5 oz stick — 'Cool Rush' invisible solid that releases extra protection when you sweat to keep you dry and fresh.</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-gray-700">$2.00</span>
-                        </label>
-
-                        <!-- Hand Sanitizer -->
-                        <label class="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition">
-                            <div class="flex items-start">
-                                <input type="checkbox" class="addon-checkbox mt-2 w-5 h-5 text-blue-600 rounded" data-price="3.50" data-name="Hand Sanitizer">
-                                <img src="hand san.png" alt="Hand Sanitizer" class="ml-4 h-16 w-16 object-contain">
-                                <div class="ml-4">
-                                    <div class="text-gray-900 font-semibold">CareAll Instant Hand Sanitizer</div>
-                                    <p class="text-sm text-gray-600 mt-1">Convenient 2 oz travel bottle of instant hand sanitizer — portable and quick-drying.</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-gray-700">$3.50</span>
-                        </label>
-
-                        <!-- Tissues -->
-                        <label class="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition">
-                            <div class="flex items-start">
-                                <input type="checkbox" class="addon-checkbox mt-2 w-5 h-5 text-blue-600 rounded" data-price="1.99" data-name="Tissues">
-                                <img src="kleenex.png" alt="Kleenex" class="ml-4 h-16 w-16 object-contain">
-                                <div class="ml-4">
-                                    <div class="text-gray-900 font-semibold">Kleenex Pocket Pack (10)</div>
-                                    <p class="text-sm text-gray-600 mt-1">Pocket pack of 10 Kleenex tissues with Sneeze Shield to keep moisture on the tissue, not your hands.</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-gray-700">$1.99</span>
-                        </label>
-
-                        <!-- Gum -->
-                        <label class="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition">
-                            <div class="flex items-start">
-                                <input type="checkbox" class="addon-checkbox mt-2 w-5 h-5 text-blue-600 rounded" data-price="2.50" data-name="Gum">
-                                <img src="orbit gum.png" alt="Orbit Gum" class="ml-4 h-16 w-16 object-contain">
-                                <div class="ml-4">
-                                    <div class="text-gray-900 font-semibold">Orbit Spearmint Gum (14 pcs)</div>
-                                    <p class="text-sm text-gray-600 mt-1">Sugar-free spearmint gum — 14 pieces per package to freshen breath.</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-gray-700">$2.50</span>
-                        </label>
-
-                        <!-- Hairbrush -->
-                        <label class="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition">
-                            <div class="flex items-start">
-                                <input type="checkbox" class="addon-checkbox mt-2 w-5 h-5 text-blue-600 rounded" data-price="1.99" data-name="Hairbrush">
-                                <img src="hairbrush.png" alt="Hairbrush" class="ml-4 h-16 w-16 object-contain">
-                                <div class="ml-4">
-                                    <div class="text-gray-900 font-semibold">Adult Hairbrush (7.5 in)</div>
-                                    <p class="text-sm text-gray-600 mt-1">Adult hairbrush individually polybagged for hygiene — compact 7.5-inch size.</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-gray-700">$1.99</span>
-                        </label>
-
-                        <!-- Body Spray -->
-                        <label class="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition">
-                            <div class="flex items-start">
-                                <input type="checkbox" class="addon-checkbox mt-2 w-5 h-5 text-blue-600 rounded" data-price="3.99" data-name="Body Spray">
-                                <img src="axe bodyspray.png" alt="Axe Body Spray" class="ml-4 h-16 w-16 object-contain">
-                                <div class="ml-4">
-                                    <div class="text-gray-900 font-semibold">Axe Apollo Body Spray (1 oz)</div>
-                                    <p class="text-sm text-gray-600 mt-1">Portable 1 oz Axe Apollo — sage & cedarwood fragrance with dual-action odor protection.</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-gray-700">$3.99</span>
-                        </label>
-
-                        <!-- Hair Ties -->
-                        <label class="flex items-start justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition">
-                            <div class="flex items-start">
-                                <input type="checkbox" class="addon-checkbox mt-2 w-5 h-5 text-blue-600 rounded" data-price="1.99" data-name="Hair Ties">
-                                <img src="hair ties.png" alt="Hair Ties" class="ml-4 h-16 w-16 object-contain">
-                                <div class="ml-4">
-                                    <div class="text-gray-900 font-semibold">Large Black Elastic Hair Ties (18)</div>
-                                    <p class="text-sm text-gray-600 mt-1">Card of 18 black elastics (2mm) with metal closure — versatile for all hair types.</p>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-gray-700">$1.99</span>
-                        </label>
-                    </div>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo"><img src="logo.png" alt="The Cure Collection"></a>
+            <div class="nav-right">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" onclick="closeMenu()"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#shop" onclick="closeMenu()"><i class="fas fa-store"></i> Shop</a></li>
+                    <li><a href="#christmas" onclick="closeMenu()"><i class="fas fa-gifts"></i> Deals</a></li>
+                    <li><a href="#survivors" onclick="closeMenu()"><i class="fas fa-users"></i> Survivors</a></li>
+                    <li><a href="#donate" onclick="closeMenu()"><i class="fas fa-heart"></i> Donate</a></li>
+                </ul>
+                <div class="cart-icon" onclick="toggleCart(); closeMenu();">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
                 </div>
+                <div class="hamburger" onclick="toggleMenu()">
+    </nav>
 
-                <!-- Cart & Current Bag -->
-                <div class="space-y-6">
-                    <!-- Current Bag Builder -->
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Current Bag</h2>
-                        
-                        <div class="space-y-3 mb-6">
-                            <div class="flex justify-between py-2 border-b border-gray-200">
-                                <span class="text-gray-700">Base Travel Bag</span>
-                                <span class="font-semibold text-gray-900">$7.00</span>
-                            </div>
-                            
-                            <div id="selected-items" class="space-y-2">
-                                <!-- Selected add-ons will appear here -->
-                            </div>
-                        </div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>The Cure Collection</h1>
+        <p>Beautiful necklaces and charms created to honor blood cancer survivors and support the fight against blood cancer. 20% of all profits are donated straight to Blood Cancer United.</p>
+        <div class="cta-buttons">
+            <a href="#shop" class="btn btn-primary"><i class="fas fa-store"></i> Shop Collection</a>
+            <a href="#donate" class="btn btn-secondary"><i class="fas fa-heart"></i> Donate Now</a>
+        </div>
+    </section>
 
-                        <div class="border-t-2 border-gray-300 pt-4 mb-4">
-                            <div class="flex justify-between items-center">
-                                <span class="text-lg font-bold text-gray-900">Bag Total:</span>
-                                <span id="bag-price" class="text-2xl font-bold text-blue-600">$7.00</span>
-                            </div>
-                        </div>
-
-                        <button id="add-to-cart-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 shadow-lg">
-                            Add to Cart
-                        </button>
+    <!-- Christmas Deals Section -->
+    <section class="christmas-deals" id="christmas">
+        <h2><i class="fas fa-gift"></i> Christmas Deals & Bundles <i class="fas fa-gift"></i></h2>
+        <p>Limited time holiday bundles - Save up to 40% on curated collections!</p>
+        <div class="bundles-grid">
+            <div class="bundle-card">
+                <div class="bundle-badge badge-popular">Popular</div>
+                <div class="bundle-image">
+                    <img src="products/Gold Rings.png" alt="Diamond Bundle">
+                </div>
+                <div class="bundle-content">
+                    <h3><i class="fas fa-gem"></i> Diamond Bundle</h3>
+                    <p>3 exquisite diamond rings - perfect for gifting or collecting</p>
+                    <div class="bundle-price">
+                        $12.00
+                        <span class="original-price">$18.00</span>
                     </div>
-
-                    <!-- Shopping Cart -->
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Shopping Cart</h2>
-                        
-                        <div id="cart-items" class="space-y-4 mb-6 min-h-[60px]">
-                            <p class="text-gray-500 text-center py-4">Your cart is empty</p>
-                        </div>
-
-                        <div class="border-t-2 border-gray-300 pt-4 mb-6">
-                            <div class="flex justify-between items-center">
-                                <span class="text-xl font-bold text-gray-900">Cart Total:</span>
-                                <span id="cart-total" class="text-3xl font-bold text-blue-600">$0.00</span>
-                            </div>
-                        </div>
-
-                        <button id="checkout-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-200 shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>
-                            Proceed to Checkout
-                        </button>
+                    <div class="savings-tag"><i class="fas fa-tag"></i> Save $6</div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1.25rem;" onclick="addBundleToCart('Diamond Bundle', 12.00)">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+            <div class="bundle-card">
+                <div class="bundle-badge badge-new">New</div>
+                <div class="bundle-image">
+                    <img src="products/Gold Rings.png" alt="Simple Bundle">
+                </div>
+                <div class="bundle-content">
+                    <h3><i class="fas fa-circle"></i> Simple Bundle</h3>
+                    <p>6 elegant simple rings - affordable and timeless collection</p>
+                    <div class="bundle-price">
+                        $9.00
+                        <span class="original-price">$15.00</span>
                     </div>
+                    <div class="savings-tag"><i class="fas fa-tag"></i> Save $6</div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1.25rem;" onclick="addBundleToCart('Simple Bundle', 9.00)">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+            <div class="bundle-card">
+                <div class="bundle-badge badge-popular">Popular</div>
+                <div class="bundle-image">
+                    <img src="products/Gold Rings.png" alt="Whole Bundle">
+                </div>
+                <div class="bundle-content">
+                    <h3><i class="fas fa-heart"></i> Whole Bundle</h3>
+                    <p>Complete collection - both diamond and simple rings together</p>
+                    <div class="bundle-price">
+                        $14.00
+                        <span class="original-price">$20.00</span>
+                    </div>
+                    <div class="savings-tag"><i class="fas fa-tag"></i> Save $6</div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1.25rem;" onclick="addBundleToCart('Whole Bundle', 14.00)">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Checkout Modal -->
-        <div id="checkout-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-3xl font-bold text-gray-900">Checkout</h2>
-                        <button id="close-modal" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
-                    </div>
+    <!-- Video Section -->
+    <section class="video-section">
+        <h2>Our Products</h2>
+        <p style="max-width: 700px; margin: 0 auto 2rem; color: var(--text-light);">
+            Explore our collection of beautiful necklaces and charms, each piece designed to inspire hope and support the cure.
+        </p>
+        <div class="video-container">
+            <video width="100%" height="500" autoplay loop muted playsinline>
+                <source src="promovideo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
 
-                    <!-- Order Summary -->
-                    <div class="mb-6 p-4 bg-gray-50 rounded-lg">
-                        <h3 class="font-semibold text-lg mb-3">Order Summary</h3>
-                        <div id="checkout-summary" class="space-y-2 mb-3">
-                            <!-- Order items will be populated here -->
-                        </div>
-                        <div class="border-t pt-3 mt-3">
-                            <div class="flex justify-between items-center">
-                                <span class="font-bold text-xl">Total:</span>
-                                <span id="checkout-total" class="font-bold text-2xl text-blue-600">$0.00</span>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Featured Products -->
+    <section class="featured-products" id="shop">
+        <div class="section-header">
+            <h2>Featured Collection</h2>
+            <p style="color: var(--text-light);">Each piece honors a brave survivor's journey</p>
+        </div>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be dynamically loaded -->
+        </div>
+    </section>
 
-                    <!-- Checkout Form -->
-                    <form id="checkout-form" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
-                            <input type="text" id="customer-name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
-                            <input type="email" id="customer-email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
-                            <input type="tel" id="customer-phone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Shipping Address *</label>
-                            <textarea id="customer-address" required rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">Payment Method *</label>
-                            <div class="space-y-3">
-                                <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition">
-                                    <input type="radio" name="payment-method" value="venmo" class="w-5 h-5 text-blue-600" required>
-                                    <span class="ml-3 font-semibold text-gray-900">Venmo</span>
-                                </label>
-                                <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition">
-                                    <input type="radio" name="payment-method" value="cash" class="w-5 h-5 text-blue-600">
-                                    <span class="ml-3 font-semibold text-gray-900">Cash (Pay on Delivery)</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div id="venmo-instructions" class="hidden p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                            <p class="font-semibold text-blue-900 mb-2">Venmo Payment Instructions:</p>
-                            <p class="text-sm text-blue-800 mb-2">Please send payment to: <span class="font-bold">@TravelMVP</span></p>
-                            <p class="text-sm text-blue-800">Include your email in the payment note.</p>
-                        </div>
-
-                        <div class="pt-4">
-                            <button type="submit" id="submit-order" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-200 shadow-lg">
-                                Place Order
-                            </button>
-                        </div>
-                    </form>
-                </div>
+    <!-- Donation Section -->
+    <section class="donation-section" id="donate">
+        <h2>Make a Direct Impact</h2>
+        <p style="margin-bottom: 3rem; font-size: 1.1rem;">100% of donations go directly to blood cancer research and patient support</p>
+        <div class="donation-cards">
+            <div class="donation-card">
+                <h3><i class="fas fa-hand-holding-heart"></i> Donate to BCU</h3>
+                <p>Support Blood Cancer United in their mission to beat blood cancer through research, support, and advocacy.</p>
+                <a href="https://www.bloodcancerunited.org/donate" target="_blank" class="btn btn-primary">Donate to BCU</a>
+            </div>
+            <div class="donation-card">
+                <h3><i class="fas fa-star"></i> Support Sam's Team</h3>
+                <p>Join Sam's fundraising team and help us reach our goal to support blood cancer patients and their families.</p>
+                <a href="#" target="_blank" class="btn btn-primary" onclick="alert('Sam\'s Team Link: [Add your team link here]')">Join Sam's Team</a>
             </div>
         </div>
+    </section>
 
-        <!-- Success Modal -->
-        <div id="success-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div class="bg-white rounded-lg shadow-2xl max-w-md w-full p-8 text-center">
-                <div class="mb-4">
-                    <svg class="mx-auto h-16 w-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-2">Order Placed Successfully!</h2>
-                <p class="text-gray-600 mb-2">Thank you for your order!</p>
-                <p class="text-sm text-gray-500 mb-6">A confirmation email has been sent to your email address.</p>
-                <p class="text-lg font-semibold text-blue-600 mb-6">Order #<span id="order-number"></span></p>
-                <button id="close-success" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-200">
-                    Continue Shopping
-                </button>
-            </div>
+    <!-- Survivors Section -->
+    <section class="survivors-section" id="survivors">
+        <div class="section-header">
+            <h2>Our Warriors</h2>
+            <p style="color: var(--text-light);">Read the inspiring stories of courage and resilience</p>
         </div>
-    </main>
+        <div class="survivors-grid" id="survivorsGrid">
+            <!-- Survivor cards will be dynamically loaded -->
+        </div>
+    </section>
+
+    <!-- Survivor Story Modal -->
+    <div class="survivor-modal" id="survivorModal">
+        <div class="survivor-modal-content">
+            <div class="survivor-modal-header">
+                <div style="flex: 1;">
+                    <div class="survivor-modal-icon" id="survivorModalIcon"></div>
+                    <h2 id="survivorModalName"></h2>
+                    <div class="survivor-modal-tagline" id="survivorModalTagline"></div>
+                </div>
+                <button class="close-survivor-modal" onclick="closeSurvivorModal()">×</button>
+            </div>
+            <div class="survivor-modal-story" id="survivorModalStory"></div>
+        </div>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white mt-16 py-8">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2025 Travel MVP. All rights reserved.</p>
-            <p class="text-gray-400 mt-2">Pack smart. Travel better.</p>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#shop">Shop</a>
+                <a href="#survivors">Survivors</a>
+                <a href="#donate">Donate</a>
+            </div>
+            <p>&copy; 2025 The Cure Collection. All rights reserved.</p>
         </div>
     </footer>
 
-    <script>
-        const BASE_PRICE = 7.00;
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxmdR_aLMvlkx5bpgETYVqeWE_PsliauqSvi0WvNVMbuX3iJ3OawbTdbF4MsrYXTOiqSg/exec';
-        
-        const checkboxes = document.querySelectorAll('.addon-checkbox');
-        const selectedItemsContainer = document.getElementById('selected-items');
-        const bagPriceElement = document.getElementById('bag-price');
-        const addToCartBtn = document.getElementById('add-to-cart-btn');
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalElement = document.getElementById('cart-total');
-        const checkoutBtn = document.getElementById('checkout-btn');
-        const checkoutModal = document.getElementById('checkout-modal');
-        const closeModalBtn = document.getElementById('close-modal');
-        const checkoutForm = document.getElementById('checkout-form');
-        const successModal = document.getElementById('success-modal');
-        const closeSuccessBtn = document.getElementById('close-success');
-        
+    <!-- Shopping Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Your Cart</h2>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div id="cartItemsContainer">
+                <div class="empty-cart">
+                    <p style="font-size: 3rem;">🛒</p>
+                    <p>Your cart is empty</p>
+                    <button class="btn btn-primary" style="margin-top: 1rem;" onclick="toggleCart()">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 id="modalProductName"></h2>
+                <button class="close-modal" onclick="closeProductModal()">×</button>
+            </div>
+            <div id="modalProductContent"></div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="product-modal" id="checkoutModal">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2>Checkout</h2>
+                <button class="close-modal" onclick="document.getElementById('checkoutModal').classList.remove('active')">×</button>
+            </div>
+            <div style="display:flex; gap:1.5rem; flex-direction:row; align-items:flex-start;">
+                <!-- Left: Customer form -->
+                <div class="checkout-left" style="flex:1; min-width:260px;">
+                    <label style="font-weight:600; margin-bottom:6px; display:block;">Full name</label>
+                    <input id="checkout-name" placeholder="Full name" style="width:100%; padding:0.6rem; margin-bottom:8px;" />
+                    <label style="font-weight:600; margin-bottom:6px; display:block;">Email (required)</label>
+                    <input id="checkout-email" placeholder="Email (required)" style="width:100%; padding:0.6rem; margin-bottom:8px;" />
+                    <label style="font-weight:600; margin-bottom:6px; display:block;">Phone (optional)</label>
+                    <input id="checkout-phone" placeholder="Phone (optional)" style="width:100%; padding:0.6rem; margin-bottom:8px;" />
+                    <label style="font-weight:600; margin-bottom:6px; display:block;">Address Line 1</label>
+                    <input id="checkout-address-line1" placeholder="Street address" style="width:100%; padding:0.6rem; margin-bottom:8px;" />
+                    <label style="font-weight:600; margin-bottom:6px; display:block;">Address Line 2 (optional)</label>
+                    <input id="checkout-address-line2" placeholder="Apt, suite, unit (optional)" style="width:100%; padding:0.6rem; margin-bottom:8px;" />
+                    <div class="address-row">
+                        <div style="flex:1; min-width:0;">
+                            <label style="font-weight:600; margin-bottom:6px; display:block;">City</label>
+                            <input id="checkout-city" class="city" placeholder="City" style="width:100%; padding:0.6rem;" />
+                        </div>
+                        <div style="width:120px;">
+                            <label style="font-weight:600; margin-bottom:6px; display:block;">State</label>
+                            <select id="checkout-state" class="state" style="width:100%; padding:0.6rem;">
+                                <option value="WI">Wisconsin</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="zip-row">
+                        <div style="width:120px;">
+                            <label style="font-weight:600; margin-bottom:6px; display:block;">ZIP</label>
+                            <input id="checkout-zip" class="zip" placeholder="ZIP" style="width:100%; padding:0.6rem;" />
+                        </div>
+                        <div style="flex:1; min-width:0;">
+                            <label style="font-weight:600; margin-bottom:6px; display:block;">Country</label>
+                            <input id="checkout-country" class="country" placeholder="Country" value="USA" style="width:100%; padding:0.6rem;" />
+                        </div>
+                    </div>
+                    <label style="font-weight:600; margin-bottom:6px; display:block;">Notes (optional)</label>
+                    <textarea id="checkout-notes" placeholder="Notes (optional)" style="width:100%; min-height:80px; padding:0.6rem; margin-bottom:8px;"></textarea>
+                    <div id="checkout-feedback" style="min-height:20px; font-weight:600; margin-bottom:8px;"></div>
+                    <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+                        <button class="btn btn-secondary" onclick="document.getElementById('checkoutModal').classList.remove('active')">Cancel</button>
+                        <button id="checkout-place-btn" class="btn btn-primary" onclick="submitOrder()">Place Order</button>
+                    </div>
+                </div>
+
+                <!-- Right: Order summary -->
+                <div style="width:360px; background:#fafafa; padding:12px; border-radius:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <div><strong>Payment</strong></div>
+                        <div id="checkout-payment-display" class="muted"></div>
+                    </div>
+                    <div style="margin-bottom:8px;">
+                        <strong>Items</strong>
+                        <div id="checkout-order-summary" style="max-height:240px; overflow:auto; margin-top:6px;"></div>
+                    </div>
+                    <div style="border-top:1px solid #eee; padding-top:8px; margin-top:8px;">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Subtotal</span><span id="checkout-subtotal">$0.00</span></div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Packaging</span><span id="checkout-packaging-display">Standard</span></div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Shipping</span><span id="checkout-shipping-display">Central (Free)</span></div>
+                        <div style="display:flex; justify-content:space-between; margin-top:8px; font-weight:700; font-size:16px;"><span>Total</span><span id="checkout-total">$0.00</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        // Product Database
+        const products = [
+            {
+                id: 1,
+                name: "AnnaKate Blood Drop Necklace",
+                survivor: "AnnaKate",
+                description: "Yellow gold brass cable chain and teardrop, 2g metal",
+                price: 18.00,
+                icon: '<i class="fas fa-gem"></i>',
+                image: "products/AnnaKate Blood Drop Necklace.png",
+                type: "necklace",
+                badge: "popular"
+            },
+            {
+                id: 2,
+                name: "Sofia Blood Drop Gem Necklace",
+                survivor: "Sofia",
+                description: "C-link chain with lobster clasp, gold stainless steel, & red glass gem",
+                price: 18.00,
+                icon: '<i class="fas fa-star"></i>',
+                image: "products/Sofia Blood Drop Gem Necklace .png",
+                type: "necklace",
+                badge: "new"
+            },
+            {
+                id: 3,
+                name: "Henry Chain Necklace",
+                survivor: "Henry",
+                description: "18\" or 20\" (length) 0.4\"(width) stainless steel wheat type chain with lobster clasp",
+                price: 15.00,
+                icon: '<i class="fas fa-shield-halved"></i>',
+                image: "products/Henry Chain Necklace.png",
+                type: "necklace"
+            },
+            {
+                id: 4,
+                name: "Will Cross Necklace",
+                survivor: "Will",
+                description: "22\" or 20\" 5g stainless steel chain with lobster clasp and cross",
+                price: 10.00,
+                icon: '<i class="fas fa-sparkles"></i>',
+                image: "products/Will Cross Necklace.png",
+                type: "necklace"
+            },
+            {
+                id: 5,
+                name: "Emily Heart Knot Necklace",
+                survivor: "Emily",
+                description: "Gold brass chain with heart knot charm",
+                price: 18.00,
+                icon: '<i class="fas fa-heart"></i>',
+                image: "products/Emily Heart Knot Necklace.png",
+                type: "necklace"
+            },
+            {
+                id: 6,
+                name: "Gabe Chain Bracelet (3-pack)",
+                survivor: "Gabe",
+                description: "Sterling silver chain variants. Sold as a 3-pack (three bracelets).",
+                price: 16.00,
+                icon: '<i class="fas fa-trophy"></i>',
+                image: "products/Gabe Chain Bracelet.png",
+                type: "bracelet"
+            },
+            {
+                id: 15,
+                name: "Gabe Chain Bracelet (Single)",
+                survivor: "Gabe",
+                description: "Sterling silver chain bracelet. Choose up to 3 single bracelets.",
+                price: 7.00,
+                icon: '<i class="fas fa-trophy"></i>',
+                image: "products/Gabe Chain Bracelet.png",
+                type: "bracelet",
+                customizationCount: 3,
+                maxQuantity: 3
+            },
+            {
+                id: 7,
+                name: "Beaded Bracelets",
+                survivor: "Blood Cancer Survivors",
+                description: "Brass beads, elastic band with lobster claw. $6 each",
+                price: 6.00,
+                icon: '<i class="fas fa-hand-fist"></i>',
+                image: "products/BeadedBracelets.png",
+                type: "bracelet"
+            },
+            {
+                id: 8,
+                name: "Nicole Earrings",
+                survivor: "Nicole",
+                description: "Stainless steel snap back dangle earrings with red gems",
+                price: 16.00,
+                icon: '<i class="fas fa-circle"></i>',
+                image: "products/Nicole Earrings.png",
+                type: "earrings",
+                badge: "popular"
+            },
+            {
+                id: 9,
+                name: "Diamond Bundle",
+                survivor: "Blood Cancer Survivors",
+                description: "3 diamond rings",
+                price: 9.00,
+                icon: '<i class="fas fa-circle"></i>',
+                image: "products/Gold Rings.png",
+                type: "ring"
+            },
+            {
+                id: 10,
+                name: "Simple Bundle",
+                survivor: "Blood Cancer Survivors",
+                description: "6 simple rings",
+                price: 10.00,
+                icon: '<i class="fas fa-circle"></i>',
+                image: "products/Gold Rings.png",
+                type: "ring"
+            },
+            {
+                id: 11,
+                name: "Whole Bundle",
+                survivor: "Blood Cancer Survivors",
+                description: "Both diamond and simple rings bundle",
+                price: 16.00,
+                icon: '<i class="fas fa-circle"></i>',
+                image: "products/Gold Rings.png",
+                type: "ring"
+            },
+            {
+                id: 12,
+                name: "Melanie Heart Adjustable Ring",
+                survivor: "Melanie",
+                description: "Adjustable stainless steel gold ring with heart gemstone",
+                price: 12.00,
+                badge: "new",
+                icon: '<i class="fas fa-circle"></i>',
+                image: "products/Melanie Heart Adjustable Ring.png",
+                type: "ring"
+            }
+            ,
+            {
+                id: 13,
+                name: "Bangle Bracelet (Single)",
+                survivor: "Blood Cancer Survivors",
+                description: "Classic bangle bracelet. Choose which bracelet (1-5).",
+                price: 6.00,
+                icon: '<i class="fas fa-circle"></i>',
+                image: "products/banglebracelets.jpeg",
+                type: "bracelet",
+                customizationCount: 5
+            },
+            {
+                id: 14,
+                name: "Bangle Bracelets (5-pack)",
+                survivor: "Blood Cancer Survivors",
+                description: "Classic bangle bracelets - 5 pack. Choose up to 5 bracelet choices.",
+                price: 20.00,
+                icon: '<i class="fas fa-circle"></i>',
+                image: "products/banglebracelets.jpeg",
+                type: "bracelet",
+                customizationCount: 5
+            }
+        ];
+
+        // Survivors Database
+        const survivors = [
+            {
+                name: "AnnaKate",
+                tagline: "Blood Cancer Survivor",
+                story: "AnnaKate's journey through blood cancer has inspired countless others. Her strength and hope continue to drive the fight against this disease.",
+                image: "annakate.png"
+            },
+            {
+                name: "Sofia",
+                tagline: "Warrior of Hope",
+                story: "Sofia's battle with blood cancer taught her the true meaning of resilience. She now dedicates her life to supporting others in their fight.",
+                image: "sofia.png"
+            },
+            {
+                name: "Henry",
+                tagline: "Survivor and Advocate",
+                story: "Henry's experience with blood cancer led him to become a passionate advocate for research and support for blood cancer patients.",
+                image: "henry.png"
+            },
+            {
+                name: "Will",
+                tagline: "Faith and Strength",
+                story: "Will's faith carried him through his blood cancer journey, and now he shares his story to inspire hope in others.",
+                image: "will.png"
+            },
+            {
+                name: "Gabe",
+                tagline: "Chain of Hope",
+                story: "Gabe's recovery from blood cancer symbolizes the unbreakable chain of hope that connects all survivors.",
+                image: "gabe.png"
+            },
+            {
+                name: "Nicole",
+                tagline: "Gem of Courage",
+                story: "Nicole's sparkling spirit shines through her blood cancer survival story, reminding us all of the beauty in perseverance.",
+                image: "nicole.png"
+            },
+            {
+                name: "Emily",
+                tagline: "Heart of a Fighter",
+                story: "Emily's heart-shaped knot represents the love and determination that helped her overcome blood cancer.",
+                image: "emily.png"
+            },
+            {
+                name: "Melanie",
+                tagline: "Ring of Victory",
+                story: "Melanie's adjustable ring symbolizes the flexibility and strength needed to conquer blood cancer.",
+                image: "melanie.png"
+            }
+        ];
+
+        // Packaging options
+        const packagingOptions = [
+            { name: "Standard Box", price: 0 },
+            { name: "Premium Gift Box", price: 5.99 }
+        ];
+
+        // Configure this to your deployed Apps Script Web App URL
+        const ORDER_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzVQOZt9yCw2VetyI82JoM7alQOXAdP5mx7riQSuzSEO7YH8xW7hABRzCh8kZCHRwrE/exec';
+
+        // Cart management
         let cart = [];
-        let bagCounter = 1;
+        let appliedPromo = false;
+        let selectedPackaging = 'standard'; // 'standard' or 'premium'
+        let selectedShipping = 'central'; // 'central' or 'home'
 
-        function updateCurrentBag() {
-            let total = BASE_PRICE;
-            selectedItemsContainer.innerHTML = '';
-
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    const price = parseFloat(checkbox.dataset.price);
-                    const name = checkbox.dataset.name;
-                    total += price;
-
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'flex justify-between py-2 text-gray-700';
-                    itemDiv.innerHTML = `
-                        <span>${name}</span>
-                        <span class="font-semibold">$${price.toFixed(2)}</span>
-                    `;
-                    selectedItemsContainer.appendChild(itemDiv);
-                }
-            });
-
-            bagPriceElement.textContent = `$${total.toFixed(2)}`;
+        function loadProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" onclick="openProductModal(${product.id})">
+                    ${product.badge ? `<div class="product-badge badge-${product.badge}">${product.badge === 'popular' ? 'Popular' : 'New'}</div>` : ''}
+                    <div class="product-image"><img src="${product.image}" alt="${product.name}"></div>
+                    <div class="product-info">
+                        <div class="survivor-name">In Honor of ${product.survivor}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-footer">
+                            <div class="product-price">$${product.price.toFixed(2)}</div>
+                            <button class="add-to-cart-btn" onclick="event.stopPropagation(); openProductModal(${product.id})">
+                                Customize
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function addToCart() {
-            const selectedAddons = [];
-            let bagTotal = BASE_PRICE;
-
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    const price = parseFloat(checkbox.dataset.price);
-                    const name = checkbox.dataset.name;
-                    selectedAddons.push({ name, price });
-                    bagTotal += price;
-                }
-            });
-
-            const bag = {
-                id: bagCounter++,
-                addons: selectedAddons,
-                total: bagTotal
-            };
-
-            cart.push(bag);
-            updateCart();
-            resetBagBuilder();
+        function loadSurvivors() {
+            const grid = document.getElementById('survivorsGrid');
+            grid.innerHTML = survivors.map(survivor => `
+                <div class="survivor-card" onclick="showSurvivorStory('${survivor.name}')">
+                    <div class="survivor-photo"><img src="${survivor.image}" alt="${survivor.name}"></div>
+                    <div class="survivor-info">
+                        <h3>${survivor.name}</h3>
+                        <div class="survivor-tagline">${survivor.tagline}</div>
+                        <p>${survivor.story.substring(0, 150)}...</p>
+                        <button class="btn btn-secondary" style="margin-top: 1rem;">Read Full Story</button>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function updateCart() {
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center py-4">Your cart is empty</p>';
-                cartTotalElement.textContent = '$0.00';
-                checkoutBtn.disabled = true;
+        function showSurvivorStory(name) {
+            const survivor = survivors.find(s => s.name === name);
+            const modal = document.getElementById('survivorModal');
+            document.getElementById('survivorModalIcon').innerHTML = `<img src="${survivor.image}" alt="${survivor.name}">`;
+            document.getElementById('survivorModalName').textContent = survivor.name;
+            document.getElementById('survivorModalTagline').textContent = survivor.tagline;
+            document.getElementById('survivorModalStory').textContent = survivor.story;
+            modal.classList.add('active');
+        }
+
+        function closeSurvivorModal() {
+            document.getElementById('survivorModal').classList.remove('active');
+        }
+
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            const modal = document.getElementById('productModal');
+            const modalName = document.getElementById('modalProductName');
+            const modalContent = document.getElementById('modalProductContent');
+
+            modalName.textContent = product.name;
+            // track which product is shown and reset quantity
+            currentModalProductId = productId;
+            modalQty = 1;
+            // universal modal for products; supports optional customizationCount
+            modalContent.innerHTML = `
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <img src="${product.image}" alt="${product.name}" style="width: 200px; height: 200px; object-fit: cover; margin-bottom: 1rem;">
+                    <div class="survivor-name" style="font-size: 1.2rem;">In Honor of ${product.survivor}</div>
+                    <p style="color: var(--text-light); margin-top: 1rem;">${product.description}</p>
+                    <div class="product-price" style="margin-top: 1rem;">$${product.price.toFixed(2)}</div>
+                </div>
+
+                <div class="product-customization">
+                    <div class="customization-group">
+                        <label>Quantity:</label>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <button class="qty-btn" onclick="changeModalQty(-1)">-</button>
+                            <span id="modal-qty" style="font-size: 1.2rem; font-weight: 600;">1</span>
+                            <button class="qty-btn" onclick="changeModalQty(1)">+</button>
+                        </div>
+                    </div>
+
+                    ${product.customizationCount ? `
+                    <div class="customization-group">
+                        <label>Select bracelet choices:</label>
+                        <div id="modal-customization-container"></div>
+                    </div>
+                    ` : ''}
+
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 2rem;" 
+                        onclick="addCustomizedToCart(${productId})">
+                        Add to Cart
+                    </button>
+                </div>
+            `;
+            modal.classList.add('active');
+            // render selectors according to the current quantity (but no more than customizationCount)
+            const selectorCount = product.customizationCount ? Math.min(modalQty, product.customizationCount) : 0;
+            renderCustomizationSelectors(selectorCount, productId);
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        let modalQty = 1;
+        let currentModalProductId = null;
+
+        function changeModalQty(delta) {
+                    modalQty = Math.max(1, modalQty + delta);
+            const qtyEl = document.getElementById('modal-qty');
+            if (qtyEl) qtyEl.textContent = modalQty;
+            // If the current product in modal is a bangle, re-render the select fields
+            if (currentModalProductId) {
+                                const prod = products.find(p => p.id === currentModalProductId);
+                                if (prod) {
+                                    // enforce maxQuantity if defined
+                                    if (prod.maxQuantity) {
+                                        modalQty = Math.min(modalQty, prod.maxQuantity);
+                                        if (qtyEl) qtyEl.textContent = modalQty;
+                                    }
+                                    // compute selector count: for products with customizationCount use modalQty (unless fixed-pack),
+                                    // otherwise pass 0 so renderer can show a fixed message for fixed packs (ids 6 or 14)
+                                    const selectorCount = prod.customizationCount ? modalQty : 0;
+                                    renderCustomizationSelectors(selectorCount, prod.id);
+                                }
+                    }
+        }
+
+
+        function renderCustomizationSelectors(count, productId) {
+            const container = document.getElementById('modal-customization-container');
+            if (!container) return;
+            // fixed-pack product ids that include all bracelets (no selection)
+            const fixedPackIds = [14, 6]; // 14 = 5-pack, 6 = Gabe 3-pack
+            if (fixedPackIds.includes(productId)) {
+                // Different messaging for 3-pack vs 5-pack
+                if (productId === 14) {
+                    container.innerHTML = `<div style="color:#333; padding:0.5rem;">This 5-pack contains all five bracelets; choices are not required.</div>`;
+                } else if (productId === 6) {
+                    container.innerHTML = `<div style="color:#333; padding:0.5rem;">This 3-pack contains all three Gabe bracelets; choices are not required.</div>`;
+                } else {
+                    container.innerHTML = '';
+                }
                 return;
             }
 
-            let cartTotal = 0;
-            cartItemsContainer.innerHTML = '';
+            // If no selectors required, clear container
+            if (!count || count <= 0) {
+                container.innerHTML = '';
+                return;
+            }
 
-            cart.forEach((bag, index) => {
-                cartTotal += bag.total;
-                
-                const bagDiv = document.createElement('div');
-                bagDiv.className = 'p-4 bg-gray-50 rounded-lg border border-gray-200';
-                
-                let addonsList = bag.addons.length > 0 
-                    ? bag.addons.map(addon => `<li class="text-sm">${addon.name}</li>`).join('')
-                    : '<li class="text-sm text-gray-500">No add-ons</li>';
-                
-                bagDiv.innerHTML = `
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <h3 class="font-semibold text-gray-900">Bag #${bag.id}</h3>
-                            <ul class="mt-1 ml-4 list-disc text-gray-700">
-                                ${addonsList}
-                            </ul>
-                        </div>
-                        <div class="text-right">
-                            <p class="font-bold text-gray-900">$${bag.total.toFixed(2)}</p>
-                            <button onclick="removeFromCart(${index})" class="text-red-600 hover:text-red-800 text-sm mt-1">Remove</button>
-                        </div>
+            let html = '';
+            // Determine how many distinct bracelet choices this product exposes (default to 5)
+            const prod = products.find(p => p.id === productId) || {};
+            const optionLimit = (prod.customizationCount && Number(prod.customizationCount) > 0) ? Number(prod.customizationCount) : 5;
+            for (let i = 1; i <= count; i++) {
+                html += `\n                    <div style="margin-bottom:0.5rem;">\n                        <label style="font-weight:600;">Choice ${i}:</label>\n                        <select class="modal-customization-select" id="modal-customization-${i}" style="width:100%; padding:0.5rem; border-radius:6px; margin-top:0.25rem;">\n                            <option value="">Any / Random</option>`;
+                for (let j = 1; j <= optionLimit; j++) {
+                    html += `\n                            <option value="${j}">Bracelet ${j}</option>`;
+                }
+                html += `\n                        </select>\n                    </div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function addCustomizedToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            let totalPrice = 0;
+            let customization = '';
+
+            totalPrice = product.price * modalQty;
+            const selects = Array.from(document.querySelectorAll('.modal-customization-select'));
+            if (selects.length) {
+                customization = selects.map(s => s.value || '').join(', ');
+            } else {
+                const sel = document.getElementById('modal-customization');
+                if (sel) customization = sel.value || '';
+            }
+
+            // For fixed-pack products indicate they contain all bracelets
+            if (product.id === 14) {
+                customization = 'Contains all 5 bracelets';
+            }
+            if (product.id === 6) {
+                customization = 'Contains all 3 Gabe bracelets';
+            }
+
+            const cartItem = {
+                id: Date.now(),
+                productId: product.id,
+                name: product.name,
+                icon: product.icon,
+                image: product.image,
+                basePrice: product.price || 0,
+                quantity: modalQty,
+                totalPrice: totalPrice,
+                customization: customization
+            };
+
+            cart.push(cartItem);
+            updateCart();
+            closeProductModal();
+            
+            // Reset selections
+            modalQty = 1;
+            
+            saveCart();
+            showToast('Added to cart!');
+        }
+
+        function addBundleToCart(bundleName, price) {
+            const cartItem = {
+                id: Date.now(),
+                name: bundleName,
+                icon: '<i class="fas fa-gift"></i>',
+                basePrice: price,
+                quantity: 1,
+                totalPrice: price,
+                isBundle: true
+            };
+            cart.push(cartItem);
+            updateCart();
+            saveCart();
+            showToast('Bundle added to cart!');
+        }
+
+        function updateCart() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <p style="font-size: 3rem; color: var(--primary-color);"><i class="fas fa-shopping-cart"></i></p>
+                        <p>Your cart is empty</p>
+                        <button class="btn btn-primary" style="margin-top: 1rem;" onclick="toggleCart()">Continue Shopping</button>
                     </div>
                 `;
-                
-                cartItemsContainer.appendChild(bagDiv);
-            });
+                return;
+            }
 
-            cartTotalElement.textContent = `$${cartTotal.toFixed(2)}`;
-            checkoutBtn.disabled = false;
+            const subtotal = cart.reduce((sum, item) => sum + item.totalPrice, 0);
+            const discount = appliedPromo ? subtotal * 0.1 : 0;
+            const total = subtotal - discount;
+
+            cartItemsContainer.innerHTML = `
+                <div class="cart-items">
+                    ${cart.map(item => `
+                        <div class="cart-item">
+                            <div class="cart-item-image">${item.image ? `<img src="${item.image}" alt="${item.name}">` : item.icon}</div>
+                            <div class="cart-item-info">
+                                <div class="cart-item-name">${item.name}</div>
+                                ${item.customization && item.customization.length ? `<div class="cart-item-options">${item.customization}</div>` : ''}
+                                <div class="cart-item-quantity">
+                                    <button class="qty-btn" onclick="updateItemQty(${item.id}, -1)">−</button>
+                                    <span>${item.quantity}</span>
+                                    <button class="qty-btn" onclick="updateItemQty(${item.id}, 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="cart-item-price">$${item.totalPrice.toFixed(2)}</div>
+                            <button class="remove-item" onclick="removeFromCart(${item.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div style="background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                    <h4 style="margin: 0 0 1rem 0; color: var(--primary-color); font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-box"></i> Packaging Options
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <label style="display: flex; align-items: flex-start; cursor: pointer; padding: 0.75rem; border: 2px solid ${selectedPackaging === 'standard' ? 'var(--primary-color)' : '#e0e0e0'}; border-radius: 10px; background: ${selectedPackaging === 'standard' ? '#fff5f5' : 'white'}; transition: all 0.2s;">
+                            <input type="radio" name="packaging" value="standard" ${selectedPackaging === 'standard' ? 'checked' : ''} onchange="updatePackaging('standard')" style="margin-top: 0.25rem; margin-right: 0.75rem; accent-color: var(--primary-color);">
+                            <div style="flex: 1;">
+                                <strong style="color: #2c3e50; display: block; margin-bottom: 0.25rem;">Red Velvet Pouch</strong>
+                                <small style="color: #7f8c8d; display: block;">Double drawstring 3"×4"</small>
+                                <strong style="color: var(--success); display: block; margin-top: 0.25rem;">Free</strong>
+                            </div>
+                        </label>
+                        <label style="display: flex; align-items: flex-start; cursor: pointer; padding: 0.75rem; border: 2px solid ${selectedPackaging === 'premium' ? 'var(--primary-color)' : '#e0e0e0'}; border-radius: 10px; background: ${selectedPackaging === 'premium' ? '#fff5f5' : 'white'}; transition: all 0.2s;">
+                            <input type="radio" name="packaging" value="premium" ${selectedPackaging === 'premium' ? 'checked' : ''} onchange="updatePackaging('premium')" style="margin-top: 0.25rem; margin-right: 0.75rem; accent-color: var(--primary-color);">
+                            <div style="flex: 1;">
+                                <strong style="color: #2c3e50; display: block; margin-bottom: 0.25rem;">Travel Storage Case</strong>
+                                <small style="color: #7f8c8d; display: block;">Multiple compartments 10"×10"×5"</small>
+                                <strong style="color: var(--primary-color); display: block; margin-top: 0.25rem;">+$20.00</strong>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div style="background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                    <h4 style="margin: 0 0 1rem 0; color: var(--primary-color); font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-truck"></i> Delivery Options
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <label style="display: flex; align-items: flex-start; cursor: pointer; padding: 0.75rem; border: 2px solid ${selectedShipping === 'central' ? 'var(--primary-color)' : '#e0e0e0'}; border-radius: 10px; background: ${selectedShipping === 'central' ? '#fff5f5' : 'white'}; transition: all 0.2s;">
+                            <input type="radio" name="shipping" value="central" ${selectedShipping === 'central' ? 'checked' : ''} onchange="updateShipping('central')" style="margin-top: 0.25rem; margin-right: 0.75rem; accent-color: var(--primary-color);">
+                            <div style="flex: 1;">
+                                <strong style="color: #2c3e50; display: block; margin-bottom: 0.25rem;">Central Pickup</strong>
+                                <small style="color: #7f8c8d; display: block;">510 Lake St, Pewaukee (HS Office)</small>
+                                <strong style="color: var(--success); display: block; margin-top: 0.25rem;">Free</strong>
+                            </div>
+                        </label>
+                        <label style="display: flex; align-items: flex-start; cursor: pointer; padding: 0.75rem; border: 2px solid ${selectedShipping === 'home' ? 'var(--primary-color)' : '#e0e0e0'}; border-radius: 10px; background: ${selectedShipping === 'home' ? '#fff5f5' : 'white'}; transition: all 0.2s;">
+                            <input type="radio" name="shipping" value="home" ${selectedShipping === 'home' ? 'checked' : ''} onchange="updateShipping('home')" style="margin-top: 0.25rem; margin-right: 0.75rem; accent-color: var(--primary-color);">
+                            <div style="flex: 1;">
+                                <strong style="color: #2c3e50; display: block; margin-bottom: 0.25rem;">Home Delivery</strong>
+                                <small style="color: #7f8c8d; display: block;">Delivered to your address</small>
+                                <strong style="color: var(--primary-color); display: block; margin-top: 0.25rem;">+$5.00</strong>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="cart-summary">
+                    <div class="cart-summary-row">
+                        <span>Subtotal</span>
+                        <span style="font-weight: 600;">$${subtotal.toFixed(2)}</span>
+                    </div>
+                    ${selectedPackaging === 'premium' ? `
+                        <div class="cart-summary-row">
+                            <span>Premium Packaging</span>
+                            <span style="font-weight: 600;">$20.00</span>
+                        </div>
+                    ` : ''}
+                    ${selectedShipping === 'home' ? `
+                        <div class="cart-summary-row">
+                            <span>Home Delivery</span>
+                            <span style="font-weight: 600;">$5.00</span>
+                        </div>
+                    ` : ''}
+                    <div style="margin: 1rem 0; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="promoCodeInput" placeholder="Promo code" style="flex: 1; padding: 0.75rem; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 0.95rem;">
+                            <button onclick="applyPromoCode()" style="padding: 0.75rem 1.25rem; background: var(--primary-color); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s;">Apply</button>
+                        </div>
+                    </div>
+                    ${appliedPromo ? `
+                        <div class="cart-summary-row" style="color: var(--success);">
+                            <span><i class="fas fa-tag"></i> Promo Code (10%)</span>
+                            <span style="font-weight: 600;">-$${discount.toFixed(2)}</span>
+                        </div>
+                    ` : ''}
+                    <div class="cart-total">
+                        <span>Total</span>
+                        <span>$${(total + (selectedPackaging === 'premium' ? 20 : 0) + (selectedShipping === 'home' ? 5 : 0)).toFixed(2)}</span>
+                    </div>
+                </div>
+
+                <div class="checkout-buttons">
+                    <button id="checkout-btn-venmo" class="checkout-btn venmo-btn" type="button">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Pay with Venmo</span>
+                    </button>
+                    <div class="payment-note">Venmo payment instructions will be emailed after placing order</div>
+                    <button id="checkout-btn-cash" class="checkout-btn cash-btn" type="button">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Cash Payment</span>
+                    </button>
+                    <button id="checkout-btn-revtrak" class="checkout-btn revtrak-btn" type="button">
+                        <i class="fas fa-building-columns"></i>
+                        <span>Pay with Revtrak</span>
+                    </button>
+                    <div class="payment-note">Complete payment through Revtrak, then submit order with receipt</div>
+                </div>
+            `;
+
+            // Attach event listeners to checkout buttons (more reliable than inline onclick for dynamically generated HTML)
+            try {
+                const venmoBtn = cartItemsContainer.querySelector('#checkout-btn-venmo') || cartItemsContainer.querySelector('.checkout-btn.venmo-btn');
+                const cashBtn = cartItemsContainer.querySelector('#checkout-btn-cash') || cartItemsContainer.querySelector('.checkout-btn.cash-btn');
+                if (venmoBtn) {
+                    if (venmoBtn._listener) venmoBtn.removeEventListener('click', venmoBtn._listener);
+                    venmoBtn._listener = function(e){ e.stopPropagation(); checkout('venmo'); };
+                    venmoBtn.addEventListener('click', venmoBtn._listener);
+                }
+                if (cashBtn) {
+                    if (cashBtn._listener) cashBtn.removeEventListener('click', cashBtn._listener);
+                    cashBtn._listener = function(e){ e.stopPropagation(); checkout('cash'); };
+                    cashBtn.addEventListener('click', cashBtn._listener);
+                }
+                const revtrakBtn = cartItemsContainer.querySelector('#checkout-btn-revtrak') || cartItemsContainer.querySelector('.checkout-btn.revtrak-btn');
+                if (revtrakBtn) {
+                    if (revtrakBtn._listener) revtrakBtn.removeEventListener('click', revtrakBtn._listener);
+                    revtrakBtn._listener = function(e){ e.stopPropagation(); checkout('revtrak'); };
+                    revtrakBtn.addEventListener('click', revtrakBtn._listener);
+                }
+            } catch (e) { console.error('attach checkout listeners error', e); }
+
         }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
+        function updateItemQty(itemId, delta) {
+            const item = cart.find(i => i.id === itemId);
+            if (item) {
+                const newQty = item.quantity + delta;
+                if (newQty > 0) {
+                    item.quantity = newQty;
+                    item.totalPrice = (item.basePrice + 
+                        (item.packaging ? packagingOptions.find(p => p.name === item.packaging).price : 0) +
+                        (item.charms ? item.charms.reduce((sum, c) => sum + c.price, 0) : 0)) * newQty;
+                    updateCart();
+                    saveCart();
+                }
+            }
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
             updateCart();
+            saveCart();
         }
 
-        function resetBagBuilder() {
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = false;
-            });
-            updateCurrentBag();
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('active');
         }
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateCurrentBag);
-        });
+        function applyPromoCode() {
+            const code = document.getElementById('promoCodeInput').value.trim().toUpperCase();
+            if (code === "BCUDONO10") {
+                appliedPromo = true;
+                showToast("Promo code applied! 10% off your order.");
+                updateCart();
+                saveCart();
+            } else {
+                showToast("Invalid promo code.");
+            }
+        }
 
-        addToCartBtn.addEventListener('click', addToCart);
+        function updatePackaging(option) {
+            selectedPackaging = option;
+            updateCart();
+            saveCart();
+        }
 
-        // Checkout Modal
-        checkoutBtn.addEventListener('click', () => {
-            if (cart.length === 0) return;
-            
-            // Populate checkout summary
-            const checkoutSummary = document.getElementById('checkout-summary');
-            const checkoutTotal = document.getElementById('checkout-total');
-            let total = 0;
-            
-            checkoutSummary.innerHTML = '';
-            cart.forEach(bag => {
-                total += bag.total;
-                const bagDiv = document.createElement('div');
-                bagDiv.className = 'text-sm text-gray-700';
-                let addonsList = bag.addons.map(a => a.name).join(', ') || 'No add-ons';
-                bagDiv.innerHTML = `<strong>Bag #${bag.id}:</strong> ${addonsList} - $${bag.total.toFixed(2)}`;
-                checkoutSummary.appendChild(bagDiv);
-            });
-            
-            checkoutTotal.textContent = `$${total.toFixed(2)}`;
-            checkoutModal.classList.remove('hidden');
-        });
+        function updateShipping(option) {
+            selectedShipping = option;
+            updateCart();
+            saveCart();
+        }
 
-        closeModalBtn.addEventListener('click', () => {
-            checkoutModal.classList.add('hidden');
-        });
+        // pending payment method while checkout modal is open
+        let pendingPaymentMethod = null;
 
-        // Payment method toggle
-        document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                const venmoInstructions = document.getElementById('venmo-instructions');
-                if (e.target.value === 'venmo') {
-                    venmoInstructions.classList.remove('hidden');
-                } else {
-                    venmoInstructions.classList.add('hidden');
+        function checkout(method) {
+            if (!ORDER_ENDPOINT || ORDER_ENDPOINT === 'REPLACE_WITH_YOUR_WEB_APP_URL') {
+                showToast('Order endpoint not configured. Please set ORDER_ENDPOINT.');
+                return;
+            }
+
+            if (!cart || cart.length === 0) {
+                showToast('Your cart is empty.');
+                return;
+            }
+
+            // open checkout modal and populate
+            pendingPaymentMethod = method;
+            const modal = document.getElementById('checkoutModal');
+            const nameInput = document.getElementById('checkout-name');
+            const emailInput = document.getElementById('checkout-email');
+            const phoneInput = document.getElementById('checkout-phone');
+            const paymentDisplay = document.getElementById('checkout-payment-display');
+            const notesInput = document.getElementById('checkout-notes');
+
+            // prefill from localStorage if available
+            const savedName = localStorage.getItem('checkout_name') || '';
+            const savedEmail = localStorage.getItem('checkout_email') || '';
+            const savedPhone = localStorage.getItem('checkout_phone') || '';
+            const savedAddress1 = localStorage.getItem('checkout_address_line1') || '';
+            const savedAddress2 = localStorage.getItem('checkout_address_line2') || '';
+            const savedCity = localStorage.getItem('checkout_city') || '';
+            const savedState = localStorage.getItem('checkout_state') || '';
+            const savedZip = localStorage.getItem('checkout_zip') || '';
+            const savedCountry = localStorage.getItem('checkout_country') || 'USA';
+            nameInput.value = savedName;
+            emailInput.value = savedEmail;
+            phoneInput.value = savedPhone;
+            document.getElementById('checkout-address-line1').value = savedAddress1;
+            document.getElementById('checkout-address-line2').value = savedAddress2;
+            document.getElementById('checkout-city').value = savedCity;
+            document.getElementById('checkout-state').value = savedState;
+            document.getElementById('checkout-zip').value = savedZip;
+            document.getElementById('checkout-country').value = savedCountry;
+            notesInput.value = '';
+            paymentDisplay.textContent = method.toUpperCase();
+
+            // render order summary inside modal and populate packaging/shipping/total
+            const summary = document.getElementById('checkout-order-summary');
+            const subtotal = cart.reduce((sum, item) => sum + item.totalPrice, 0);
+            summary.innerHTML = `
+                ${cart.map(i => `<div style="display:flex; justify-content:space-between; margin-bottom:8px;"><div><strong style="display:block">${i.name}</strong>${i.customization? '<div class="muted">'+i.customization+'</div>' : ''}<div class="muted">Qty: ${i.quantity}</div></div><div style="text-align:right;">$${i.totalPrice.toFixed(2)}</div></div>`).join('')}
+            `;
+
+            document.getElementById('checkout-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('checkout-packaging-display').textContent = selectedPackaging === 'premium' ? 'Premium ($20)' : 'Standard (Free)';
+            document.getElementById('checkout-shipping-display').textContent = selectedShipping === 'home' ? 'Home ($5)' : 'Central (Free)';
+            const packagingCost = selectedPackaging === 'premium' ? 20 : 0;
+            const shippingCost = selectedShipping === 'home' ? 5 : 0;
+            const discount = appliedPromo ? subtotal * 0.1 : 0;
+            const finalTotal = subtotal - discount + packagingCost + shippingCost;
+            document.getElementById('checkout-total').textContent = `$${finalTotal.toFixed(2)}`;
+
+            // show payment method
+            document.getElementById('checkout-payment-display').textContent = method.toUpperCase();
+
+            // reset feedback and enable place button
+            document.getElementById('checkout-feedback').textContent = '';
+            const placeBtn = document.getElementById('checkout-place-btn');
+            placeBtn.disabled = false;
+            placeBtn.textContent = 'Place Order';
+
+            modal.classList.add('active');
+        }
+
+        async function submitOrder() {
+            const nameInput = document.getElementById('checkout-name');
+            const emailInput = document.getElementById('checkout-email');
+            const phoneInput = document.getElementById('checkout-phone');
+            const notesInput = document.getElementById('checkout-notes');
+            const feedback = document.getElementById('checkout-feedback');
+
+            const customerName = (nameInput.value || '').trim();
+            const customerEmail = (emailInput.value || '').trim();
+            const customerPhone = (phoneInput.value || '').trim();
+            const customerAddressLine1 = (document.getElementById('checkout-address-line1').value || '').trim();
+            const customerAddressLine2 = (document.getElementById('checkout-address-line2').value || '').trim();
+            const customerCity = (document.getElementById('checkout-city').value || '').trim();
+            const customerState = (document.getElementById('checkout-state').value || '').trim();
+            const customerZip = (document.getElementById('checkout-zip').value || '').trim();
+            const customerCountry = (document.getElementById('checkout-country').value || '').trim();
+            const notes = (notesInput.value || '').trim();
+
+            if (!customerEmail) {
+                feedback.textContent = 'Email is required.';
+                feedback.style.color = 'red';
+                return;
+            }
+
+            // save name/email locally for convenience
+            localStorage.setItem('checkout_name', customerName);
+            localStorage.setItem('checkout_email', customerEmail);
+            localStorage.setItem('checkout_phone', customerPhone);
+            localStorage.setItem('checkout_address_line1', customerAddressLine1);
+            localStorage.setItem('checkout_address_line2', customerAddressLine2);
+            localStorage.setItem('checkout_city', customerCity);
+            localStorage.setItem('checkout_state', customerState);
+            localStorage.setItem('checkout_zip', customerZip);
+            localStorage.setItem('checkout_country', customerCountry);
+
+            const subtotal = cart.reduce((sum, item) => sum + item.totalPrice, 0);
+            const discount = appliedPromo ? subtotal * 0.1 : 0;
+            const packagingCost = selectedPackaging === 'premium' ? 20 : 0;
+            const shippingCost = selectedShipping === 'home' ? 5 : 0;
+            const finalTotal = subtotal - discount + packagingCost + shippingCost;
+
+            const payload = {
+                name: customerName,
+                email: customerEmail,
+                phone: customerPhone,
+                address: {
+                    line1: customerAddressLine1,
+                    line2: customerAddressLine2,
+                    city: customerCity,
+                    state: customerState,
+                    zip: customerZip,
+                    country: customerCountry
+                },
+                cart: cart.map(i => ({ name: i.name, quantity: i.quantity, totalPrice: i.totalPrice, customization: i.customization || '' })),
+                appliedPromo: appliedPromo,
+                selectedPackaging: selectedPackaging,
+                selectedShipping: selectedShipping,
+                paymentMethod: pendingPaymentMethod,
+                notes: notes
+            };
+
+            try {
+                // disable place button while submitting
+                const placeBtn = document.getElementById('checkout-place-btn');
+                placeBtn.disabled = true;
+                placeBtn.textContent = 'Processing...';
+
+                feedback.textContent = 'Submitting order...';
+                feedback.style.color = 'black';
+                const resp = await fetch(ORDER_ENDPOINT, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+                const data = await resp.json();
+                if (!data || !data.success) {
+                    console.error('Order submission failed:', data);
+                    feedback.textContent = 'Order failed to submit. Please try again.';
+                    feedback.style.color = 'red';
+                    placeBtn.disabled = false;
+                    placeBtn.textContent = 'Place Order';
+                    return;
+                }
+
+                const orderId = data.orderId || '(no id)';
+
+                // replace modal content with confirmation screen (no download)
+                const modalContent = document.querySelector('#checkoutModal .product-modal-content');
+                const revtrakInstructions = pendingPaymentMethod === 'revtrak' ? `
+                    <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-top: 1rem; text-align: left;">
+                        <h3 style="margin-bottom: 0.5rem; color: #856404;"><i class="fas fa-info-circle"></i> Revtrak Payment Instructions</h3>
+                        <ol style="margin-left: 1.5rem; line-height: 1.8;">
+                            <li>Go to: <a href="https://pewaukee.revtrak.net/donations-and-fundraisers/global-business-treasure-trove/" target="_blank" style="color: #e67e22; font-weight: 600;">Revtrak Payment Portal</a></li>
+                            <li>Enter your order amount: <strong style="color: var(--primary-color);">$${finalTotal.toFixed(2)}</strong></li>
+                            <li>Complete the payment</li>
+                            <li>Take a screenshot or forward the receipt email to:<br><strong style="color: var(--primary-color);">brewsam26@Pewaukeeschools.org</strong></li>
+                            <li>Include your Order ID: <strong>${orderId}</strong></li>
+                        </ol>
+                    </div>
+                ` : '';
+                modalContent.innerHTML = `
+                    <div style="padding: 1rem; text-align: center;">
+                        <h2 style="color: var(--primary-color);">Order Confirmed</h2>
+                        <p style="font-size:1rem;">Thank you — your order has been received.</p>
+                        <p style="margin-top:8px;">Order ID: <strong>${orderId}</strong></p>
+                        <p style="margin-top:8px;">A confirmation email has been sent to <strong id="confirmed-email"></strong>.</p>
+                        ${revtrakInstructions}
+                        <div style="margin-top:16px;"><button class="btn btn-primary" onclick="document.getElementById('checkoutModal').classList.remove('active')">Close</button></div>
+                    </div>
+                `;
+                // safely insert email as text
+                const confirmedEmailEl = document.getElementById('confirmed-email');
+                if (confirmedEmailEl) confirmedEmailEl.textContent = customerEmail;
+
+                // clear cart client-side (already emailed)
+                cart = [];
+                appliedPromo = false;
+                saveCart();
+                updateCart();
+
+            } catch (err) {
+                console.error('Checkout error:', err);
+                feedback.textContent = 'An error occurred while submitting your order. Please try again.';
+                feedback.style.color = 'red';
+                const placeBtn = document.getElementById('checkout-place-btn');
+                if (placeBtn) { placeBtn.disabled = false; placeBtn.textContent = 'Place Order'; }
+            }
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
 
-        // Submit Order
-        checkoutForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submit-order');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Processing...';
-            
-            const orderNumber = 'TMV' + Date.now();
-            const orderData = {
-                orderNumber: orderNumber,
-                customerName: document.getElementById('customer-name').value,
-                customerEmail: document.getElementById('customer-email').value,
-                customerPhone: document.getElementById('customer-phone').value,
-                customerAddress: document.getElementById('customer-address').value,
-                paymentMethod: document.querySelector('input[name="payment-method"]:checked').value,
-                bags: cart,
-                total: cart.reduce((sum, bag) => sum + bag.total, 0),
-                orderDate: new Date().toISOString()
-            };
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
 
+        function closeMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('appliedPromo', appliedPromo);
+            localStorage.setItem('selectedPackaging', selectedPackaging);
+            localStorage.setItem('selectedShipping', selectedShipping);
+        }
+
+        function loadCart() {
             try {
-                // Send to Google Apps Script
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(orderData)
-                });
-
-                // Show success modal
-                document.getElementById('order-number').textContent = orderNumber;
-                checkoutModal.classList.add('hidden');
-                successModal.classList.remove('hidden');
-                
-                // Reset cart and form
+                const savedCart = localStorage.getItem('cart');
+                if (savedCart) {
+                    cart = JSON.parse(savedCart);
+                }
+                const savedPromo = localStorage.getItem('appliedPromo');
+                if (savedPromo !== null) {
+                    appliedPromo = JSON.parse(savedPromo);
+                }
+                const savedPackaging = localStorage.getItem('selectedPackaging');
+                if (savedPackaging) {
+                    selectedPackaging = savedPackaging;
+                }
+                const savedShipping = localStorage.getItem('selectedShipping');
+                if (savedShipping) {
+                    selectedShipping = savedShipping;
+                }
+            } catch (e) {
+                console.error('Error loading cart from localStorage:', e);
+                // Reset to defaults
                 cart = [];
-                updateCart();
-                checkoutForm.reset();
-                
-            } catch (error) {
-                console.error('Error submitting order:', error);
-                alert('There was an error processing your order. Please try again or contact support.');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Place Order';
+                appliedPromo = false;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+            loadProducts();
+            loadSurvivors();
+            updateCart();
+        });
+
+        // Close modals when clicking outside
+        document.getElementById('cartModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleCart();
             }
         });
 
-        closeSuccessBtn.addEventListener('click', () => {
-            successModal.classList.add('hidden');
-        });
-
-        // Close modals on outside click
-        checkoutModal.addEventListener('click', (e) => {
-            if (e.target === checkoutModal) {
-                checkoutModal.classList.add('hidden');
+        document.getElementById('productModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProductModal();
             }
         });
 
-        successModal.addEventListener('click', (e) => {
-            if (e.target === successModal) {
-                successModal.classList.add('hidden');
+        document.getElementById('survivorModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSurvivorModal();
             }
         });
 
-        // Make removeFromCart globally accessible
-        window.removeFromCart = removeFromCart;
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            if (!e.target.closest('.nav-container') && navLinks.classList.contains('active')) {
+                closeMenu();
+            }
+        });
     </script>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
 </body>
 </html>
