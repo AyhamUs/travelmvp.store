@@ -78,7 +78,8 @@ function addOrderToSheet(orderData) {
   // Format order details
   let orderDetails = '';
   orderData.bags.forEach(bag => {
-    orderDetails += `Bag #${bag.id}: `;
+    const bagColor = bag.color ? ` (${bag.color.charAt(0).toUpperCase() + bag.color.slice(1)})` : '';
+    orderDetails += `Bag #${bag.id}${bagColor}: `;
     if (bag.addons.length > 0) {
       const addonNames = bag.addons.map(addon => `${addon.name} ($${addon.price.toFixed(2)})`).join(', ');
       orderDetails += addonNames;
@@ -114,9 +115,10 @@ function sendConfirmationEmail(orderData) {
   // Build order details HTML
   let bagsHtml = '';
   orderData.bags.forEach(bag => {
+    const bagColor = bag.color ? ` (${bag.color.charAt(0).toUpperCase() + bag.color.slice(1)})` : '';
     bagsHtml += `
       <div style="margin-bottom: 15px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #4285f4;">
-        <strong>Bag #${bag.id} - $${bag.total.toFixed(2)}</strong><br>
+        <strong>Bag #${bag.id}${bagColor} - $${bag.total.toFixed(2)}</strong><br>
         <ul style="margin: 10px 0; padding-left: 20px;">
           <li>Base Travel Bag - $7.00</li>
     `;
@@ -214,7 +216,8 @@ function sendConfirmationEmail(orderData) {
     
     ORDER DETAILS:
     ${orderData.bags.map(bag => {
-      let bagText = `Bag #${bag.id} - $${bag.total.toFixed(2)}\n  - Base Travel Bag - $7.00`;
+      const bagColor = bag.color ? ` (${bag.color.charAt(0).toUpperCase() + bag.color.slice(1)})` : '';
+      let bagText = `Bag #${bag.id}${bagColor} - $${bag.total.toFixed(2)}\n  - Base Travel Bag - $7.00`;
       bag.addons.forEach(addon => {
         bagText += `\n  - ${addon.name} - $${addon.price.toFixed(2)}`;
       });
@@ -258,6 +261,7 @@ function testEmail() {
     bags: [
       {
         id: 1,
+        color: 'tan',
         addons: [
           { name: 'Toothbrush/Toothpaste', price: 1.75 },
           { name: 'Degree Womens Deodorant', price: 2.00 }
@@ -266,6 +270,7 @@ function testEmail() {
       },
       {
         id: 2,
+        color: 'black',
         addons: [
           { name: 'Hand Sanitizer', price: 3.50 },
           { name: 'Degree Mens Deodorant', price: 2.00 }
